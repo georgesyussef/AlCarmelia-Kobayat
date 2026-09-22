@@ -353,7 +353,58 @@ function resetTeacherPin(id) {
 }
 
 function renderClasses(){
- classesBody.innerHTML=(db.classes||[]).map(c=>{let n=(db.students||[]).filter(s=>s.class===c.code).length;return `<tr><td>${esc(c.code)}</td><td><strong>${esc(c.name)}</strong></td><td>${esc(c.section)}</td><td><span class="badge gold">${esc(c.level)}</span></td><td>${n}</td><td><button class="btn secondary" onclick="editClass('${c.code}')">Éditer</button> <button class="btn danger" onclick="del('classes','${c.code}')">Suppr</button></td></tr>`}).join('')||'<tr><td colspan="6" class="empty">Aucune classe enregistrée.</td></tr>';
+ classesBody.innerHTML=(db.classes||[]).map((c, i)=>{
+  let n=(db.students||[]).filter(s=>s.class===c.code).length;
+  return `<tr>
+    <td>${esc(c.code)}</td>
+    <td><strong>${esc(c.name)}</strong></td>
+    <td>${esc(c.section)}</td>
+    <td><span class="badge gold">${esc(c.level)}</span></td>
+    <td>${n}</td>
+    <td>
+      <button class="btn secondary" onclick="editClass(${i})">Éditer</button> 
+      <button class="btn danger" onclick="deleteClass(${i})">Supprimer</button>
+    </td>
+  </tr>`;
+ }).join('')||'<tr><td colspan="6" class="empty">Aucune classe enregistrée.</td></tr>';
+}
+
+function openClass(c={}, index=null){
+ openModal('Classe',`<div class="formgrid">
+ <div class="field"><label>Code (Ex: EB1)</label><input id="c_code" value="${esc(c.code||'')}"></div>
+ <div class="field"><label>Nom Classe</label><input id="c_name" value="${esc(c.name||'')}"></div>
+ <div class="field"><label>Section</label><input id="c_section" value="${esc(c.section||'A')}"></div>
+ <div class="field"><label>Cycle</label><select id="c_level">
+   <option ${c.level==='Préscolaire'?'selected':''}>Préscolaire</option>
+   <option ${c.level==='Cycle Primaire 1'?'selected':''}>Cycle Primaire 1</option>
+   <option ${c.level==='Cycle Primaire 2'?'selected':''}>Cycle Primaire 2</option>
+   <option ${c.level==='Cycle Complémentaire'?'selected':''}>Cycle Complémentaire</option>
+ </select></div>
+ </div><div class="modal-actions"><button class="btn primary" onclick="saveClass(${index !== null ? index : ''})">Enregistrer</button></div>`);
+}
+
+function saveClass(index){
+ let x={code:c_code.value.trim(),name:c_name.value.trim(),section:c_section.value.trim(),level:c_level.value};
+ if(!x.code)return alert('Code requis.');
+ if(index !== undefined && index !== null && index !== '') {
+   db.classes[index] = x;
+ } else {
+   if(!db.classes) db.classes = [];
+   db.classes.push(x);
+ }
+ closeModal();
+ save();
+}
+
+function editClass(index){
+ openClass(db.classes[index], index);
+}
+
+function deleteClass(index){
+ if(confirm('Voulez-vous supprimer cette classe?')){
+   db.classes.splice(index, 1);
+   save();
+ }
 }
 
 function renderSubjects(){
@@ -464,20 +515,6 @@ function saveTeacher(old){
  closeModal();save();
 }
 function editTeacher(id){openTeacher(db.teachers.find(t=>t.id===id))}
-
-function openClass(c={}){openModal('Classe',`<div class="formgrid">
- <div class="field"><label>Code (Ex: EB1)</label><input id="c_code" value="${esc(c.code||'')}"></div>
- <div class="field"><label>Nom Classe</label><input id="c_name" value="${esc(c.name||'')}"></div>
- <div class="field"><label>Section</label><input id="c_section" value="${esc(c.section||'A')}"></div>
- <div class="field"><label>Cycle</label><select id="c_level"><option>Préscolaire</option><option>Cycle Primaire 1</option><option>Cycle Primaire 2</option><option>Cycle Complémentaire</option></select></div>
- </div><div class="modal-actions"><button class="btn primary" onclick="saveClass('${esc(c.code||'')}')">Enregistrer</button></div>`)}
-function saveClass(old){
- let x={code:c_code.value.trim(),name:c_name.value.trim(),section:c_section.value.trim(),level:c_level.value};
- if(!x.code)return alert('Code requis.');
- if(old)db.classes=db.classes.map(a=>a.code===old?x:a);else db.classes.push(x);
- closeModal();save();
-}
-function editClass(id){openClass(db.classes.find(c=>c.code===id))}
 
 function openSubject(s={}){openModal('Matière',`<div class="formgrid">
  <div class="field"><label>Code (Ex: MATH)</label><input id="sub_code" value="${esc(s.code||'')}"></div>
