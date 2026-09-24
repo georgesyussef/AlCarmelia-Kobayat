@@ -4,74 +4,62 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>École Al-Carmelia · Administration</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7b1238">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
-:root{--burg:#7b1238;--burg2:#5e0d2c;--navy:#12365f;--gold:#d7ae45;--cream:#faf7ef;--ink:#172235;--muted:#718096;--line:#e6e9ef;--white:#fff;--danger:#b42318;--green:#16825d}
+:root{--burg:#7b1238;--navy:#12365f;--gold:#d7ae45;--cream:#faf7ef;--ink:#172235;--muted:#718096;--line:#e6e9ef;--white:#fff;--danger:#b42318;--green:#16825d}
 *{box-sizing:border-box}
 body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f4f6f9;color:var(--ink)}
 button,input,select,textarea{font:inherit}
 
-#adminLoginModal { position: fixed; inset: 0; background: rgba(18, 54, 95, 0.95); display: flex; align-items: center; justify-content: center; z-index: 999; }
-.login-box { background: #fff; padding: 35px 30px; border-radius: 18px; width: min(400px, 90%); text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-.login-box h2 { margin: 0 0 8px; color: var(--navy); font-size: 20px; }
-.login-box p { margin: 0 0 20px; color: var(--muted); font-size: 13.5px; }
-.login-box input { width: 100%; padding: 12px; border: 1px solid #d8dde6; border-radius: 10px; margin-bottom: 15px; text-align: center; font-size: 15px; outline: none; }
+.login-modal{position:fixed;inset:0;background:rgba(18,54,95,0.95);display:flex;align-items:center;justify-content:center;z-index:999;padding:15px}
+.login-box{background:#fff;padding:35px 25px;border-radius:18px;width:min(400px,100%);text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.2)}
+.login-box img{width:75px;height:75px;border-radius:12px;margin-bottom:12px;object-fit:cover}
+.login-box h2{margin:0 0 8px;color:var(--navy);font-size:22px}
+.login-box p{margin:0 0 20px;color:var(--muted);font-size:13.5px}
+.login-box input{width:100%;padding:12px;border:1px solid #d8dde6;border-radius:10px;margin-bottom:12px;text-align:left;font-size:14px;outline:none}
 
 .pw-wrap{position:relative;display:flex;align-items:center;margin-bottom:12px}
 .pw-wrap input{margin-bottom:0!important;padding-right:40px!important}
 .pw-toggle{position:absolute;right:12px;background:none;border:none;cursor:pointer;font-size:18px;padding:0;color:var(--muted)}
 
-.app{display:flex;min-height:100vh}
-.sidebar{width:260px;background:linear-gradient(180deg,var(--burg2),#3e0a20);color:#fff;padding:20px 14px;position:fixed;inset:0 auto 0 0;z-index:5}
-.brand{display:flex;gap:12px;align-items:center;padding:4px 8px 18px;border-bottom:1px solid #ffffff20}
-.brand strong{font-size:14px;line-height:1.2;display:block}
-.brand small{opacity:.75;font-size:11px}
-.nav{margin-top:16px}
-.nav button{width:100%;border:0;background:transparent;color:#fff;text-align:left;padding:11px 12px;border-radius:10px;margin:2px 0;cursor:pointer;opacity:.88;font-size:14px}
-.nav button:hover,.nav button.active{background:#ffffff18;opacity:1}
-.nav button span{display:inline-block;width:26px}
-.main{margin-left:260px;width:calc(100% - 260px)}
-.top{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:4}
-.top h1{font-size:19px;margin:0}
-.user{display:flex;align-items:center;gap:12px}
-.avatar{width:38px;height:38px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
-.content{padding:28px}
-.view{display:none}
-.view.active{display:block}
-.grid{display:grid;gap:18px}
-.stats{grid-template-columns:repeat(4,minmax(0,1fr))}
-.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 5px 18px #16213d08}
-.stat{position:relative;overflow:hidden}
-.stat:after{content:"";position:absolute;right:-22px;top:-22px;width:80px;height:80px;border-radius:50%;background:#d7ae4518}
-.label{color:var(--muted);font-size:13px}
-.num{font-size:28px;font-weight:800;margin-top:5px}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin:22px 0 12px}
-.section-head h2{margin:0;font-size:18px}
-.btn{border:0;border-radius:10px;padding:9px 14px;cursor:pointer;font-weight:650;display:inline-flex;align-items:center;gap:6px;font-size:13.5px}
+.btn{border:0;border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:650;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:14px}
+.btn-block{width:100%}
 .primary{background:var(--burg);color:#fff}
 .secondary{background:#eef2f7;color:var(--navy)}
 .danger{background:#fff0ef;color:var(--danger)}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.success{background:#e8f7f0;color:var(--green)}
+
+.container{max-width:1100px;margin:0 auto;padding:20px 15px}
+.header{background:#fff;border-radius:16px;padding:16px 20px;border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.header-brand{display:flex;align-items:center;gap:12px}
+.header-brand img{width:48px;height:48px;border-radius:10px;object-fit:cover}
+.header h1{margin:0;font-size:20px;color:var(--navy)}
+.header p{margin:2px 0 0;color:var(--muted);font-size:13px}
+
+.tabs{display:flex;gap:8px;margin-bottom:20px;overflow-x:auto;padding-bottom:5px}
+.tab-btn{background:#fff;border:1px solid var(--line);padding:10px 18px;border-radius:10px;cursor:pointer;white-space:nowrap;font-weight:600;color:var(--muted)}
+.tab-btn.active{background:var(--burg);color:#fff;border-color:var(--burg)}
+
+.card{background:#fff;border-radius:16px;border:1px solid var(--line);padding:20px;margin-bottom:15px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px;align-items:center;justify-content:space-between}
 .toolbar input,.toolbar select,.modal input,.modal select,.modal textarea{border:1px solid #d8dde6;border-radius:10px;padding:9px 12px;background:#fff;outline:none}
-.toolbar input{min-width:220px}
-.table-wrap{overflow:auto}
+
+.table-wrap{overflow-x:auto}
 .table{width:100%;border-collapse:collapse}
-.table th,.table td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
-.table th{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.table th,.table td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left}
+.table th{font-size:12px;color:var(--muted);text-transform:uppercase}
 .badge{display:inline-block;padding:4px 9px;border-radius:999px;font-size:12px;font-weight:700;background:#eef3fa;color:var(--navy)}
-.badge.green{background:#e8f7f0;color:var(--green)}
-.badge.gold{background:#fbf5df;color:#7c5a00}
 .badge.red{background:#fde8e8;color:var(--danger)}
-.welcome{background:linear-gradient(110deg,var(--navy),#28547f);color:#fff;border-radius:18px;padding:22px;display:flex;justify-content:space-between;gap:20px;align-items:center}
-.welcome h2{margin:0 0 5px;font-size:20px}
-.welcome p{margin:0;opacity:.88;font-size:13.5px}
-.two{grid-template-columns:1.35fr .65fr}
-.quick button{display:block;width:100%;margin:8px 0;text-align:left}
-.muted{color:var(--muted)}
 .empty{text-align:center;padding:30px;color:var(--muted)}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+@media(max-width:768px){.grid-2{grid-template-columns:1fr}}
+
 .modal-bg{display:none;position:fixed;inset:0;background:#10182899;z-index:20;align-items:center;justify-content:center;padding:18px}
 .modal-bg.show{display:flex}
-.modal{width:min(540px,100%);background:#fff;border-radius:18px;padding:22px}
-.modal h3{margin:0 0 16px}
+.modal{width:min(500px,100%);background:#fff;border-radius:18px;padding:22px}
 .formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}
 .field input,.field select,.field textarea{width:100%}
@@ -82,133 +70,230 @@ button,input,select,textarea{font:inherit}
 </head>
 <body>
 
-<div id="adminLoginModal">
+<div id="loginModal" class="login-modal">
   <div class="login-box">
-    <h2>Espace Administration</h2>
-    <p>Entrez le mot de passe administrateur</p>
+    <img src="icon-192.png" alt="Logo">
+    <h2>École Al-Carmelia</h2>
+    <p>Panneau d'Administration Général</p>
+    
+    <input type="email" id="adminEmailInput" placeholder="Email Admin (Ex: admin@carmelia.edu.lb)">
+    
     <div class="pw-wrap">
-      <input type="password" id="adminPassInput" placeholder="Mot de passe">
-      <button class="pw-toggle" type="button" onclick="togglePass('adminPassInput', this)">👁️</button>
+      <input type="password" id="adminPinInput" placeholder="Mot de passe Admin">
+      <button class="pw-toggle" type="button" onclick="togglePass('adminPinInput', this)">👁️</button>
     </div>
-    <button class="btn primary" style="width:100%;justify-content:center;padding:11px" onclick="checkAdminPassword()">Se Connecter</button>
+    
+    <button class="btn primary btn-block" onclick="loginAdmin()">Se Connecter</button>
   </div>
 </div>
 
-<div class="app" id="appContent" style="display:none">
-<aside class="sidebar">
-  <div class="brand">
-    <div><strong>École Al-Carmelia</strong><small>Administration</small></div>
-  </div>
-  <nav class="nav">
-    <button class="active" data-view="dashboard"><span>⌂</span><span class="txt">Tableau de bord</span></button>
-    <button data-view="classes"><span>🏫</span><span class="txt">Classes</span></button>
-    <button data-view="subjects"><span>📚</span><span class="txt">Matières</span></button>
-    <button data-view="teachers"><span>👩‍🏫</span><span class="txt">Enseignants</span></button>
-    <button data-view="students"><span>🎓</span><span class="txt">Élèves</span></button>
-    <button data-view="attendance"><span>✓</span><span class="txt">Présence</span></button>
-    <button data-view="agenda"><span>📅</span><span class="txt">Agenda & Devoirs</span></button>
-    <button data-view="announcements"><span>📢</span><span class="txt">Annonces</span></button>
-    <button data-view="settings"><span>⚙</span><span class="txt">Paramètres</span></button>
+<div id="adminContent" class="container" style="display:none">
+  <header class="header">
+    <div class="header-brand">
+      <img src="icon-192.png" alt="Logo">
+      <div>
+        <h1>École Al-Carmelia</h1>
+        <p>Administration & Configuration Systèmes</p>
+      </div>
+    </div>
+    <button class="btn danger" style="padding:8px 14px;font-size:12px" onclick="logoutAdmin()">Déconnexion</button>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="switchTab('t_students', this)">🎓 Élèves</button>
+    <button class="tab-btn" onclick="switchTab('t_teachers', this)">👩‍🏫 Enseignants</button>
+    <button class="tab-btn" onclick="switchTab('t_classes', this)">🏫 Classes & Matières</button>
+    <button class="tab-btn" onclick="switchTab('t_announcements', this)">📢 Annonces Générales</button>
+    <button class="tab-btn" onclick="switchTab('t_security', this)">🔒 Sécurité Admin</button>
   </nav>
-</aside>
 
-<main class="main">
-<header class="top">
-  <div style="display:flex;align-items:center;gap:10px">
-    <button class="btn secondary mobile-menu-btn" onclick="toggleSidebar()" style="display:none;padding:6px 10px;font-size:18px">☰</button>
-    <h1 id="pageTitle" style="margin:0">Tableau de bord</h1>
-  </div>
-  <div class="user">
-    <div style="text-align:right"><strong>School Admin</strong><br><small class="muted">Direction</small></div>
-    <div class="avatar">SA</div>
-    <button class="btn danger" style="padding:6px 10px;font-size:12px;margin-left:8px" onclick="logoutAdmin()">Déconnexion</button>
-  </div>
-</header>
+  <main>
+    <div id="t_students" class="tab-content">
+      <div class="card">
+        <div class="toolbar">
+          <input type="text" id="searchStudent" placeholder="🔍 Rechercher élève ou ID..." oninput="renderStudents()">
+          <button class="btn primary" onclick="openStudentModal()">＋ Ajouter un Élève</button>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr><th>ID Élève</th><th>Nom Complet</th><th>Classe</th><th>Code PIN</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="studentsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-<section class="content">
+    <div id="t_teachers" class="tab-content" style="display:none">
+      <div class="card">
+        <div class="toolbar">
+          <input type="text" id="searchTeacher" placeholder="🔍 Rechercher enseignant..." oninput="renderTeachers()">
+          <button class="btn primary" onclick="openTeacherModal()">＋ Ajouter un Enseignant</button>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr><th>ID Prof</th><th>Nom Complet</th><th>Matière</th><th>Code PIN</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="teachersBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-<div id="dashboard" class="view active">
-  <div class="welcome">
-   <div><h2>Panneau d'Administration École Al-Carmelia</h2><p>Gestion Simplifiée : Agenda, Absences, et Notes.</p></div>
-  </div>
-  <div class="grid stats" style="margin-top:18px">
-    <div class="card stat"><div class="label">Élèves</div><div class="num" id="statStudents">0</div></div>
-    <div class="card stat"><div class="label">Enseignants</div><div class="num" id="statTeachers">0</div></div>
-    <div class="card stat"><div class="label">Classes</div><div class="num" id="statClasses">0</div></div>
-    <div class="card stat"><div class="label">Matières</div><div class="num" id="statSubjects">0</div></div>
-  </div>
-  <div class="grid two">
-    <div class="card"><div class="section-head"><h2>Derniers élèves ajoutés</h2><button class="btn secondary" onclick="showView('students')">Voir tout</button></div><div id="recentStudents"></div></div>
-    <div class="card quick"><div class="section-head"><h2>Actions Rapides</h2></div>
-      <button class="btn primary" onclick="openClass()">＋ 1. Ajouter Classe</button>
-      <button class="btn secondary" onclick="openSubject()">＋ 2. Ajouter Matières</button>
-      <button class="btn secondary" onclick="openTeacher()">＋ 3. Ajouter Enseignant</button>
-      <button class="btn secondary" onclick="openStudent()">＋ 4. Ajouter Élève</button>
+    <div id="t_classes" class="tab-content" style="display:none">
+      <div class="grid-2">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
+            <h3 style="margin:0">Gestion des Classes</h3>
+            <button class="btn primary" onclick="openClassModal()">＋ Classe</button>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>Code</th><th>Nom de la Classe</th><th>Action</th></tr></thead>
+              <tbody id="classesBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
+            <h3 style="margin:0">Matières Enseignées</h3>
+            <button class="btn primary" onclick="openSubjectModal()">＋ Matière</button>
+          </div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>Matière</th><th>Action</th></tr></thead>
+              <tbody id="subjectsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="t_announcements" class="tab-content" style="display:none">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
+          <h3 style="margin:0">Annonces Officielles de l'École</h3>
+          <button class="btn primary" onclick="openAdminAnnModal()">＋ Publier une Annonce</button>
+        </div>
+        <div id="adminAnnList"></div>
+      </div>
+    </div>
+
+    <div id="t_security" class="tab-content" style="display:none">
+      <div class="card" style="max-width:450px;margin:0 auto">
+        <h3>Paramètres de Sécurité Administration</h3>
+        <div style="margin-bottom:12px">
+          <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Email Admin</label>
+          <input type="email" id="secAdminEmail" style="width:100%">
+        </div>
+        <div style="margin-bottom:12px">
+          <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Ancien mot de passe</label>
+          <div class="pw-wrap">
+            <input type="password" id="oldAdminPin" style="width:100%">
+            <button class="pw-toggle" type="button" onclick="togglePass('oldAdminPin', this)">👁️</button>
+          </div>
+        </div>
+        <div style="margin-bottom:15px">
+          <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Nouveau mot de passe</label>
+          <div class="pw-wrap">
+            <input type="password" id="newAdminPin" style="width:100%">
+            <button class="pw-toggle" type="button" onclick="togglePass('newAdminPin', this)">👁️</button>
+          </div>
+        </div>
+        <button class="btn primary btn-block" onclick="changeAdminSecurity()">Mettre à jour la sécurité</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Modals -->
+<div class="modal-bg" id="studentModalBg">
+  <div class="modal">
+    <h3 id="studentModalTitle">Ajouter un Élève</h3>
+    <input type="hidden" id="st_edit_index">
+    <div class="formgrid">
+      <div class="field"><label>ID Élève (Ex: ST-101)</label><input type="text" id="st_id"></div>
+      <div class="field"><label>Code PIN (Mot de passe)</label><input type="text" id="st_pin" placeholder="Ex: 1234"></div>
+      <div class="field" style="grid-column:1/-1"><label>Nom Complet</label><input type="text" id="st_name"></div>
+      <div class="field" style="grid-column:1/-1"><label>Classe</label><select id="st_class"></select></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn secondary" onclick="closeStudentModal()">Annuler</button>
+      <button class="btn primary" onclick="saveStudent()">Enregistrer</button>
     </div>
   </div>
 </div>
 
-<div id="classes" class="view">
- <div class="section-head"><h2>Classes & Cycles</h2><button class="btn primary" onclick="openClass()">＋ Ajouter Classe</button></div>
- <div class="card"><div class="table-wrap"><table class="table"><thead><tr><th>Code</th><th>Nom Classe</th><th>Section</th><th>Cycle</th><th>Élèves</th><th>Actions</th></tr></thead><tbody id="classesBody"></tbody></table></div></div>
-</div>
-
-<div id="subjects" class="view">
- <div class="section-head"><h2>Matières (Subjects)</h2><button class="btn primary" onclick="openSubject()">＋ Ajouter Matière</button></div>
- <div class="card"><div class="table-wrap"><table class="table"><thead><tr><th>Code</th><th>Matière</th><th>Langue</th><th>Cycle</th><th>Actions</th></tr></thead><tbody id="subjectsBody"></tbody></table></div></div>
-</div>
-
-<div id="teachers" class="view">
- <div class="section-head"><h2>Enseignants (Teachers)</h2><button class="btn primary" onclick="openTeacher()">＋ Ajouter Enseignant</button></div>
- <div class="card"><div class="toolbar"><input id="teacherSearch" placeholder="Chercher un enseignant..." oninput="renderTeachers()"></div><div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Nom</th><th>Matière</th><th>Email</th><th>Téléphone</th><th>Actions</th></tr></thead><tbody id="teachersBody"></tbody></table></div></div>
-</div>
-
-<div id="students" class="view">
- <div class="section-head"><h2>Élèves (Students)</h2><button class="btn primary" onclick="openStudent()">＋ Ajouter Élève</button></div>
- <div class="card"><div class="toolbar"><input id="studentSearch" placeholder="Chercher par nom, ID ou tél..." oninput="renderStudents()"><select id="studentClassFilter" onchange="renderStudents()"><option value="">Toutes les classes</option></select></div><div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Nom Complet</th><th>Classe</th><th>Parent</th><th>Téléphone</th><th>Statut</th><th>Actions</th></tr></thead><tbody id="studentsBody"></tbody></table></div></div>
-</div>
-
-<div id="attendance" class="view">
- <div class="section-head"><h2>✓ Registre de Présence</h2><button class="btn primary" onclick="saveAttendance()">💾 Enregistrer Présence</button></div>
- <div class="card">
-  <div class="toolbar">
-   <select id="attClass" onchange="renderAttendance()"></select>
-   <input type="date" id="attDate" onchange="renderAttendance()">
+<div class="modal-bg" id="teacherModalBg">
+  <div class="modal">
+    <h3 id="teacherModalTitle">Ajouter un Enseignant</h3>
+    <input type="hidden" id="t_edit_index">
+    <div class="formgrid">
+      <div class="field"><label>ID Prof (Ex: T-01)</label><input type="text" id="t_id"></div>
+      <div class="field"><label>Code PIN (Mot de passe)</label><input type="text" id="t_pin" placeholder="Ex: 1234"></div>
+      <div class="field" style="grid-column:1/-1"><label>Nom Complet</label><input type="text" id="t_name"></div>
+      <div class="field" style="grid-column:1/-1"><label>Matière Enseignée</label><select id="t_subject"></select></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn secondary" onclick="closeTeacherModal()">Annuler</button>
+      <button class="btn primary" onclick="saveTeacher()">Enregistrer</button>
+    </div>
   </div>
-  <div class="table-wrap"><table class="table"><thead><tr><th>ID Élève</th><th>Nom</th><th>Statut</th></tr></thead><tbody id="attendanceBody"></tbody></table></div>
- </div>
 </div>
 
-<div id="agenda" class="view">
- <div class="section-head"><h2>📅 Agenda & Devoirs</h2><button class="btn primary" onclick="openAgenda()">＋ Ajouter Devoir</button></div>
- <div class="card"><div id="agendaList"></div></div>
-</div>
-
-<div id="announcements" class="view">
- <div class="section-head"><h2>📢 Annonces & Remarques</h2><button class="btn primary" onclick="openAnnouncement()">＋ Nouvelle Annonce</button></div>
- <div class="card"><div id="announcementsList"></div></div>
-</div>
-
-<div id="settings" class="view">
- <div class="card">
-  <h2>Paramètres & Sauvegarde</h2>
-  <div style="display:flex;gap:10px;margin-top:15px">
-    <button class="btn secondary" onclick="exportBackup()">📥 Exporter la base (JSON)</button>
-    <button class="btn secondary" onclick="document.getElementById('importFile').click()">📤 Importer la base (JSON)</button>
-    <input type="file" id="importFile" style="display:none" accept=".json" onchange="importBackup(event)">
+<div class="modal-bg" id="classModalBg">
+  <div class="modal">
+    <h3>Ajouter une Classe</h3>
+    <div class="formgrid">
+      <div class="field"><label>Code (Ex: EB7)</label><input type="text" id="c_code"></div>
+      <div class="field"><label>Nom (Ex: 7ème Année)</label><input type="text" id="c_name"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn secondary" onclick="closeClassModal()">Annuler</button>
+      <button class="btn primary" onclick="saveClass()">Ajouter</button>
+    </div>
   </div>
-  <hr style="margin:20px 0;border:0;border-top:1px solid var(--line)">
-  <button class="btn danger" onclick="clearAllData()">🗑 Effacer TOUTES les données</button>
- </div>
 </div>
 
-</section>
-</main>
+<div class="modal-bg" id="subjectModalBg">
+  <div class="modal">
+    <h3>Ajouter une Matière</h3>
+    <div class="field"><label>Nom de la Matière</label><input type="text" id="subj_name" placeholder="Ex: Physique"></div>
+    <div class="modal-actions">
+      <button class="btn secondary" onclick="closeSubjectModal()">Annuler</button>
+      <button class="btn primary" onclick="saveSubject()">Ajouter</button>
+    </div>
+  </div>
 </div>
 
-<div class="modal-bg" id="modalBg"><div class="modal"><h3 id="modalTitle"></h3><div id="modalContent"></div></div></div>
+<div class="modal-bg" id="adminAnnModalBg">
+  <div class="modal">
+    <h3>Publier une Annonce Générale</h3>
+    <div class="formgrid">
+      <div class="field"><label>Date</label><input type="date" id="adm_ann_date"></div>
+      <div class="field"><label>Cible</label>
+        <select id="adm_ann_target">
+          <option value="All">Toute l'École</option>
+        </select>
+      </div>
+      <div class="field" style="grid-column:1/-1"><label>Titre de l'Annonce</label><input type="text" id="adm_ann_title"></div>
+      <div class="field" style="grid-column:1/-1"><label>Contenu / Détails</label><textarea id="adm_ann_body" rows="3"></textarea></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn secondary" onclick="closeAdminAnnModal()">Annuler</button>
+      <button class="btn primary" onclick="saveAdminAnn()">Publier</button>
+    </div>
+  </div>
+</div>
 
 <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+
 const firebaseConfig = {
   apiKey: "AIzaSyDJRfis99yy8m9Z7pIHkw3U2i0jUqLXBec",
   authDomain: "carmelia-school.firebaseapp.com",
@@ -222,7 +307,27 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 
-const ADMIN_PASSWORD = "admin123";
+let db = {
+  adminEmail: "admin@carmelia.edu.lb",
+  adminPin: "admin123",
+  students: [],
+  teachers: [],
+  classes: [],
+  subjects: [],
+  announcements: [],
+  agenda: [],
+  attendance: {},
+  grades: {}
+};
+
+firestore.collection("school_data").doc("main").onSnapshot((doc) => {
+  if (doc.exists) {
+    db = doc.data();
+    if (!db.adminEmail) db.adminEmail = "admin@carmelia.edu.lb";
+    if (!db.adminPin) db.adminPin = "admin123";
+    renderAllAdminData();
+  }
+});
 
 function togglePass(inputId, btn) {
   const inp = document.getElementById(inputId);
@@ -235,307 +340,349 @@ function togglePass(inputId, btn) {
   }
 }
 
-function checkAdminPassword() {
-  const input = document.getElementById('adminPassInput').value;
-  if (input === ADMIN_PASSWORD) {
-    sessionStorage.setItem('admin_auth', 'true');
-    document.getElementById('adminLoginModal').style.display = 'none';
-    document.getElementById('appContent').style.display = 'flex';
-    renderAll();
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+
+function saveDB() {
+  firestore.collection("school_data").doc("main").set(db)
+    .then(() => alert("Modifications enregistrées avec succès!"))
+    .catch(err => alert("Erreur de sauvegarde: " + err.message));
+}
+
+function loginAdmin() {
+  const email = document.getElementById('adminEmailInput').value.trim().toLowerCase();
+  const pin = document.getElementById('adminPinInput').value.trim();
+  
+  const targetEmail = (db.adminEmail || 'admin@carmelia.edu.lb').toLowerCase();
+  const targetPin = db.adminPin || 'admin123';
+
+  if (email === targetEmail && pin === targetPin) {
+    sessionStorage.setItem('admin_logged_in', 'true');
+    document.getElementById('loginModal').style.display = 'none';
+    document.getElementById('adminContent').style.display = 'block';
+    renderAllAdminData();
   } else {
-    alert("Mot de passe incorrect!");
+    alert("Email ou Mot de passe Admin incorrect!");
   }
 }
 
 function logoutAdmin() {
-  sessionStorage.removeItem('admin_auth');
+  sessionStorage.removeItem('admin_logged_in');
   location.reload();
 }
 
-if (sessionStorage.getItem('admin_auth') === 'true') {
-  document.getElementById('adminLoginModal').style.display = 'none';
-  document.getElementById('appContent').style.display = 'flex';
+if (sessionStorage.getItem('admin_logged_in') === 'true') {
+  firestore.collection("school_data").doc("main").get().then((doc) => {
+    if (doc.exists) db = doc.data();
+    document.getElementById('loginModal').style.display = 'none';
+    document.getElementById('adminContent').style.display = 'block';
+    renderAllAdminData();
+  });
 }
 
-const emptyDb = {students:[],teachers:[],classes:[],subjects:[],agenda:[],announcements:[],attendance:{},grades:{}};
-let db = emptyDb;
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).style.display = 'block';
+  btn.classList.add('active');
+}
 
-firestore.collection("school_data").doc("main").onSnapshot((doc) => {
-  if (doc.exists) {
-    db = doc.data();
+function renderAllAdminData() {
+  renderStudents();
+  renderTeachers();
+  renderClasses();
+  renderSubjects();
+  renderAdminAnnouncements();
+  populateDropdowns();
+  
+  if (document.getElementById('secAdminEmail')) {
+    document.getElementById('secAdminEmail').value = db.adminEmail || "admin@carmelia.edu.lb";
+  }
+}
+
+function populateDropdowns() {
+  const classOpts = (db.classes || []).map(c => `<option value="${esc(c.code)}">${esc(c.code)} - ${esc(c.name)}</option>`).join('');
+  st_class.innerHTML = classOpts || '<option value="">Aucune classe</option>';
+
+  const subjOpts = (db.subjects || []).map(s => `<option value="${esc(s)}">${esc(s)}</option>`).join('');
+  t_subject.innerHTML = subjOpts || '<option value="Général">Général</option>';
+
+  if(!adm_ann_date.value) adm_ann_date.value = new Date().toISOString().split('T')[0];
+}
+
+function renderStudents() {
+  const query = document.getElementById('searchStudent').value.toLowerCase();
+  const filtered = (db.students || []).filter(s => s.name.toLowerCase().includes(query) || s.id.toLowerCase().includes(query));
+
+  studentsBody.innerHTML = filtered.map(s => {
+    const realIdx = db.students.indexOf(s);
+    return `
+      <tr>
+        <td><strong>${esc(s.id)}</strong></td>
+        <td>${esc(s.name)}</td>
+        <td><span class="badge">${esc(s.class)}</span></td>
+        <td><code>${esc(s.pin || '1234')}</code></td>
+        <td>
+          <button class="btn secondary" style="padding:4px 8px;font-size:12px" onclick="editStudent(${realIdx})">✏️ Modifier</button>
+          <button class="btn danger" style="padding:4px 8px;font-size:12px" onclick="deleteStudent(${realIdx})">🗑️</button>
+        </td>
+      </tr>
+    `;
+  }).join('') || '<tr><td colspan="5" class="empty">Aucun élève trouvé.</td></tr>';
+}
+
+function openStudentModal() {
+  st_edit_index.value = "-1";
+  studentModalTitle.textContent = "Ajouter un Élève";
+  st_id.value = "";
+  st_name.value = "";
+  st_pin.value = "1234";
+  studentModalBg.classList.add('show');
+}
+function closeStudentModal() { studentModalBg.classList.remove('show'); }
+
+function editStudent(idx) {
+  const s = db.students[idx];
+  st_edit_index.value = idx;
+  studentModalTitle.textContent = "Modifier Élève";
+  st_id.value = s.id;
+  st_name.value = s.name;
+  st_pin.value = s.pin || "1234";
+  st_class.value = s.class;
+  studentModalBg.classList.add('show');
+}
+
+function saveStudent() {
+  if(!db.students) db.students = [];
+  const idx = parseInt(st_edit_index.value);
+  const data = {
+    id: st_id.value.trim(),
+    name: st_name.value.trim(),
+    class: st_class.value,
+    pin: st_pin.value.trim() || '1234'
+  };
+
+  if(!data.id || !data.name) return alert("Veuillez remplir l'ID et le Nom.");
+
+  if (idx === -1) {
+    db.students.push(data);
   } else {
-    db = emptyDb;
+    db.students[idx] = data;
   }
-  renderAll();
-});
-
-function save() {
-  firestore.collection("school_data").doc("main").set(db)
-    .then(() => console.log("Sauvegardé avec succès"))
-    .catch(err => console.error("Erreur de sauvegarde:", err));
+  closeStudentModal();
+  saveDB();
+  renderStudents();
 }
 
-function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-
-function toggleSidebar() {
-  document.querySelector('.sidebar').classList.toggle('open');
-}
-
-function showView(id){
- document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
- document.getElementById(id).classList.add('active');
- document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.view===id));
- document.getElementById('pageTitle').textContent=id[0].toUpperCase()+id.slice(1);
- renderAll();
-}
-
-document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{if(b.dataset.view) showView(b.dataset.view)});
-
-function renderDashboard(){
- statStudents.textContent=(db.students||[]).length;
- statTeachers.textContent=(db.teachers||[]).length;
- statClasses.textContent=(db.classes||[]).length;
- statSubjects.textContent=(db.subjects||[]).length;
- recentStudents.innerHTML=(db.students||[]).slice(-5).reverse().map(s=>`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)"><span><strong>${esc(s.name)}</strong><br><small class="muted">${esc(s.id)} · ${esc(s.class)}</small></span><span class="badge green">${esc(s.status)}</span></div>`).join('')||'<div class="empty">Aucun élève enregistré.</div>';
-}
-
-function renderStudents(){
- const q=(studentSearch?.value||'').toLowerCase(), f=studentClassFilter?.value||'';
- studentClassFilter.innerHTML='<option value="">Toutes les classes</option>'+(db.classes||[]).map(c=>`<option ${c.code===f?'selected':''}>${esc(c.code)}</option>`).join('');
- let arr=(db.students||[]).filter(s=>(!q||[s.id,s.name,s.class,s.parent,s.phone].join(' ').toLowerCase().includes(q))&&(!f||s.class===f));
- 
- studentsBody.innerHTML=arr.map(s=>{
-  const cleanPhone = (s.phone||'').replace(/[^0-9]/g, '');
-  const waBtn = cleanPhone ? `<a href="https://wa.me/${cleanPhone}" target="_blank" style="text-decoration:none;margin-left:6px">💬</a>` : '';
-  return `<tr>
-    <td>${esc(s.id)}</td>
-    <td><strong>${esc(s.name)}</strong></td>
-    <td><span class="badge">${esc(s.class)}</span></td>
-    <td>${esc(s.parent)}</td>
-    <td>${esc(s.phone)} ${waBtn}</td>
-    <td><span class="badge green">${esc(s.status)}</span></td>
-    <td>
-      <button class="btn secondary" onclick="editStudent('${s.id}')">Éditer</button> 
-      <button class="btn secondary" onclick="resetStudentPin('${s.id}')">🔑 Reset PIN</button> 
-      <button class="btn danger" onclick="del('students','${s.id}')">Suppr</button>
-    </td>
-  </tr>`;
- }).join('')||'<tr><td colspan="7" class="empty">Aucun élève.</td></tr>';
-}
-
-function renderTeachers(){
- const q=(teacherSearch?.value||'').toLowerCase();
- teachersBody.innerHTML=(db.teachers||[]).filter(t=>[t.id,t.name,t.subject,t.email,t.phone].join(' ').toLowerCase().includes(q)).map(t=>`<tr><td>${esc(t.id)}</td><td><strong>${esc(t.name)}</strong></td><td>${esc(t.subject)}</td><td>${esc(t.email)}</td><td>${esc(t.phone)}</td><td><button class="btn secondary" onclick="editTeacher('${t.id}')">Éditer</button> <button class="btn secondary" onclick="resetTeacherPin('${t.id}')">🔑 Reset PIN</button> <button class="btn danger" onclick="del('teachers','${t.id}')">Suppr</button></td></tr>`).join('')||'<tr><td colspan="6" class="empty">Aucun enseignant.</td></tr>';
-}
-
-function resetStudentPin(id) {
-  const newPin = prompt("Entrez le nouveau mot de passe / PIN pour cet élève:", "1234");
-  if (newPin !== null && newPin.trim() !== "") {
-    const st = db.students.find(s => s.id === id);
-    if (st) {
-      st.pin = newPin.trim();
-      save();
-      alert("Mot de passe réinitialisé avec succès!");
-    }
+function deleteStudent(idx) {
+  if(confirm("Voulez-vous vraiment supprimer cet élève?")) {
+    db.students.splice(idx, 1);
+    saveDB();
+    renderStudents();
   }
 }
 
-function resetTeacherPin(id) {
-  const newPin = prompt("Entrez le nouveau mot de passe / PIN pour cet enseignant:", "1234");
-  if (newPin !== null && newPin.trim() !== "") {
-    const tc = db.teachers.find(t => t.id === id);
-    if (tc) {
-      tc.pin = newPin.trim();
-      save();
-      alert("Mot de passe réinitialisé avec succès!");
-    }
+function renderTeachers() {
+  const query = document.getElementById('searchTeacher').value.toLowerCase();
+  const filtered = (db.teachers || []).filter(t => t.name.toLowerCase().includes(query) || t.id.toLowerCase().includes(query));
+
+  teachersBody.innerHTML = filtered.map(t => {
+    const realIdx = db.teachers.indexOf(t);
+    return `
+      <tr>
+        <td><strong>${esc(t.id)}</strong></td>
+        <td>${esc(t.name)}</td>
+        <td><span class="badge">${esc(t.subject || 'Général')}</span></td>
+        <td><code>${esc(t.pin || '1234')}</code></td>
+        <td>
+          <button class="btn secondary" style="padding:4px 8px;font-size:12px" onclick="editTeacher(${realIdx})">✏️ Modifier</button>
+          <button class="btn danger" style="padding:4px 8px;font-size:12px" onclick="deleteTeacher(${realIdx})">🗑️</button>
+        </td>
+      </tr>
+    `;
+  }).join('') || '<tr><td colspan="5" class="empty">Aucun enseignant trouvé.</td></tr>';
+}
+
+function openTeacherModal() {
+  t_edit_index.value = "-1";
+  teacherModalTitle.textContent = "Ajouter un Enseignant";
+  t_id.value = "";
+  t_name.value = "";
+  t_pin.value = "1234";
+  teacherModalBg.classList.add('show');
+}
+function closeTeacherModal() { teacherModalBg.classList.remove('show'); }
+
+function editTeacher(idx) {
+  const t = db.teachers[idx];
+  t_edit_index.value = idx;
+  teacherModalTitle.textContent = "Modifier Enseignant";
+  t_id.value = t.id;
+  t_name.value = t.name;
+  t_pin.value = t.pin || "1234";
+  t_subject.value = t.subject || "Général";
+  teacherModalBg.classList.add('show');
+}
+
+function saveTeacher() {
+  if(!db.teachers) db.teachers = [];
+  const idx = parseInt(t_edit_index.value);
+  const data = {
+    id: t_id.value.trim(),
+    name: t_name.value.trim(),
+    subject: t_subject.value,
+    pin: t_pin.value.trim() || '1234'
+  };
+
+  if(!data.id || !data.name) return alert("Veuillez remplir l'ID et le Nom.");
+
+  if (idx === -1) {
+    db.teachers.push(data);
+  } else {
+    db.teachers[idx] = data;
+  }
+  closeTeacherModal();
+  saveDB();
+  renderTeachers();
+}
+
+function deleteTeacher(idx) {
+  if(confirm("Voulez-vous vraiment supprimer cet enseignant?")) {
+    db.teachers.splice(idx, 1);
+    saveDB();
+    renderTeachers();
   }
 }
 
-function renderClasses(){
- classesBody.innerHTML=(db.classes||[]).map((c, i)=>{
-  let n=(db.students||[]).filter(s=>s.class===c.code).length;
-  return `<tr>
-    <td>${esc(c.code)}</td>
-    <td><strong>${esc(c.name)}</strong></td>
-    <td>${esc(c.section)}</td>
-    <td><span class="badge gold">${esc(c.level)}</span></td>
-    <td>${n}</td>
-    <td>
-      <button class="btn secondary" onclick="editClass(${i})">Éditer</button> 
-      <button class="btn danger" onclick="deleteClass(${i})">Supprimer</button>
-    </td>
-  </tr>`;
- }).join('')||'<tr><td colspan="6" class="empty">Aucune classe enregistrée.</td></tr>';
+function renderClasses() {
+  classesBody.innerHTML = (db.classes || []).map((c, i) => `
+    <tr>
+      <td><strong>${esc(c.code)}</strong></td>
+      <td>${esc(c.name)}</td>
+      <td><button class="btn danger" style="padding:4px 8px;font-size:12px" onclick="deleteClass(${i})">🗑️</button></td>
+    </tr>
+  `).join('') || '<tr><td colspan="3" class="empty">Aucune classe.</td></tr>';
 }
 
-function openClass(c={}, index=null){
- openModal('Classe',`<div class="formgrid">
- <div class="field"><label>Code (Ex: EB1)</label><input id="c_code" value="${esc(c.code||'')}"></div>
- <div class="field"><label>Nom Classe</label><input id="c_name" value="${esc(c.name||'')}"></div>
- <div class="field"><label>Section</label><input id="c_section" value="${esc(c.section||'A')}"></div>
- <div class="field"><label>Cycle</label><select id="c_level">
-   <option ${c.level==='Préscolaire'?'selected':''}>Préscolaire</option>
-   <option ${c.level==='Cycle Primaire 1'?'selected':''}>Cycle Primaire 1</option>
-   <option ${c.level==='Cycle Primaire 2'?'selected':''}>Cycle Primaire 2</option>
-   <option ${c.level==='Cycle Complémentaire'?'selected':''}>Cycle Complémentaire</option>
- </select></div>
- </div><div class="modal-actions"><button class="btn primary" onclick="saveClass(${index !== null ? index : ''})">Enregistrer</button></div>`);
+function openClassModal() { classModalBg.classList.add('show'); }
+function closeClassModal() { classModalBg.classList.remove('show'); }
+
+function saveClass() {
+  if(!db.classes) db.classes = [];
+  const code = c_code.value.trim();
+  const name = c_name.value.trim();
+  if(!code || !name) return alert("Veuillez remplir le code et le nom.");
+
+  db.classes.push({ code, name });
+  closeClassModal();
+  saveDB();
+  renderClasses();
+  populateDropdowns();
 }
 
-function saveClass(index){
- let x={code:c_code.value.trim(),name:c_name.value.trim(),section:c_section.value.trim(),level:c_level.value};
- if(!x.code)return alert('Code requis.');
- if(index !== undefined && index !== null && index !== '') {
-   db.classes[index] = x;
- } else {
-   if(!db.classes) db.classes = [];
-   db.classes.push(x);
- }
- closeModal();
- save();
-}
-
-function editClass(index){
- openClass(db.classes[index], index);
-}
-
-function deleteClass(index){
- if(confirm('Voulez-vous supprimer cette classe?')){
-   db.classes.splice(index, 1);
-   save();
- }
-}
-
-function renderSubjects(){
- subjectsBody.innerHTML=(db.subjects||[]).map(s=>`<tr><td>${esc(s.code)}</td><td><strong>${esc(s.name)}</strong></td><td>${esc(s.language)}</td><td>${esc(s.cycle)}</td><td><button class="btn secondary" onclick="editSubject('${s.code}')">Éditer</button> <button class="btn danger" onclick="del('subjects','${s.code}')">Suppr</button></td></tr>`).join('')||'<tr><td colspan="5" class="empty">Aucune matière.</td></tr>';
-}
-
-function renderAgenda(){
- agendaList.innerHTML=(db.agenda||[]).map((a,i)=>`<div style="display:flex;justify-content:space-between;gap:15px;padding:12px 0;border-bottom:1px solid var(--line)"><div><strong>${esc(a.title)}</strong><div class="muted">${esc(a.date)} · ${esc(a.class)} · ${esc(a.subject)}</div><div>${esc(a.details||'')}</div></div><div><button class="btn danger" onclick="db.agenda.splice(${i},1);save()">Supprimer</button></div></div>`).join('')||'<div class="empty">Aucun devoir.</div>';
-}
-
-function openAgenda(){
- if(!db.classes.length || !db.subjects.length) return alert('Ajoutez d\'abord des classes et des matières!');
- openModal('Ajouter Devoir',`<div class="formgrid">
- <div class="field"><label>Date</label><input type="date" id="a_date" value="${new Date().toISOString().split('T')[0]}"></div>
- <div class="field"><label>Classe</label><select id="a_class">${db.classes.map(c=>`<option>${esc(c.code)}</option>`).join('')}</select></div>
- <div class="field"><label>Matière</label><select id="a_subject">${db.subjects.map(s=>`<option>${esc(s.name)}</option>`).join('')}</select></div>
- <div class="field"><label>Type</label><select id="a_type"><option>Homework</option><option>Exam</option></select></div>
- <div class="field" style="grid-column:1/-1"><label>Titre</label><input id="a_title"></div>
- <div class="field" style="grid-column:1/-1"><label>Détails</label><input id="a_details"></div>
- </div><div class="modal-actions"><button class="btn primary" onclick="saveAgenda()">Enregistrer</button></div>`);
-}
-function saveAgenda(){
- if(!db.agenda) db.agenda = [];
- db.agenda.push({date:a_date.value,class:a_class.value,subject:a_subject.value,type:a_type.value,title:a_title.value,details:a_details.value});
- closeModal();save();
-}
-
-function renderAnnouncements(){
- announcementsList.innerHTML=(db.announcements||[]).map((a,i)=>{
-  let targetLabel = a.target;
-  if(a.target === 'All') targetLabel = 'Toute l\'école';
-  else {
-    const st = (db.students||[]).find(s => s.id === a.target);
-    if(st) targetLabel = `Élève: ${st.name} (${st.class})`;
+function deleteClass(i) {
+  if(confirm("Supprimer cette classe?")) {
+    db.classes.splice(i, 1);
+    saveDB();
+    renderClasses();
+    populateDropdowns();
   }
-  return `<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)"><div><strong>${esc(a.title)}</strong> <span class="badge ${a.target.startsWith('ST-')?'red':''}">${esc(targetLabel)}</span><div class="muted">${esc(a.date)} ${a.author?'· Par: '+esc(a.author):''}</div><div>${esc(a.body)}</div></div><div><button class="btn danger" onclick="db.announcements.splice(${i},1);save()">Supprimer</button></div></div>`;
- }).join('')||'<div class="empty">Aucune annonce.</div>';
 }
 
-function openAnnouncement(){
- openModal('Nouvelle Annonce',`<div class="formgrid">
- <div class="field"><label>Date</label><input type="date" id="ann_date" value="${new Date().toISOString().split('T')[0]}"></div>
- <div class="field"><label>Cible</label><select id="ann_target"><option value="All">Toute l'École</option>${db.classes.map(c=>`<option value="${esc(c.code)}">Classe: ${esc(c.code)}</option>`).join('')}${db.students.map(s=>`<option value="${esc(s.id)}">Élève: ${esc(s.name)} (${esc(s.id)})</option>`).join('')}</select></div>
- <div class="field" style="grid-column:1/-1"><label>Titre</label><input id="ann_title"></div>
- <div class="field" style="grid-column:1/-1"><label>Texte</label><textarea id="ann_body"></textarea></div>
- </div><div class="modal-actions"><button class="btn primary" onclick="saveAnnouncement()">Publier</button></div>`);
-}
-function saveAnnouncement(){
- if(!db.announcements) db.announcements = [];
- db.announcements.push({date:ann_date.value,target:ann_target.value,title:ann_title.value,body:ann_body.value,author:'Administration'});
- closeModal();save();
+function renderSubjects() {
+  subjectsBody.innerHTML = (db.subjects || []).map((s, i) => `
+    <tr>
+      <td><strong>${esc(s)}</strong></td>
+      <td><button class="btn danger" style="padding:4px 8px;font-size:12px" onclick="deleteSubject(${i})">🗑️</button></td>
+    </tr>
+  `).join('') || '<tr><td colspan="2" class="empty">Aucune matière.</td></tr>';
 }
 
-function renderAttendance(){
- if(!attClass||!attDate)return;
- if(!attDate.value) attDate.value=new Date().toISOString().split('T')[0];
- attClass.innerHTML=(db.classes||[]).map(c=>`<option>${esc(c.code)}</option>`).join('')||'<option>Aucune classe</option>';
- const key=attDate.value+'|'+attClass.value, rec=(db.attendance||{})[key]||{};
- const list=(db.students||[]).filter(s=>s.class===attClass.value);
- attendanceBody.innerHTML=list.map(s=>`<tr><td>${esc(s.id)}</td><td><strong>${esc(s.name)}</strong></td><td>
-  <label><input type="radio" name="att_${s.id}" value="Present" ${(rec[s.id]||'Present')==='Present'?'checked':''}> Présent</label>
-  <label><input type="radio" name="att_${s.id}" value="Absent" ${rec[s.id]==='Absent'?'checked':''}> Absent</label>
- </td></tr>`).join('')||'<tr><td colspan="3" class="empty">Aucun élève dans cette classe.</td></tr>';
-}
-function saveAttendance(){
- if(!db.attendance) db.attendance = {};
- const key=attDate.value+'|'+attClass.value, rec={};
- document.querySelectorAll('input[name^="att_"]:checked').forEach(r=>{rec[r.name.replace('att_','')]=r.value});
- db.attendance[key]=rec;save();alert('Présence enregistrée.');
+function openSubjectModal() { subjectModalBg.classList.add('show'); }
+function closeSubjectModal() { subjectModalBg.classList.remove('show'); }
+
+function saveSubject() {
+  if(!db.subjects) db.subjects = [];
+  const name = subj_name.value.trim();
+  if(!name) return alert("Veuillez entrer un nom.");
+
+  db.subjects.push(name);
+  closeSubjectModal();
+  saveDB();
+  renderSubjects();
+  populateDropdowns();
 }
 
-function openModal(title,body){modalTitle.textContent=title;modalContent.innerHTML=body;modalBg.classList.add('show')}
-function closeModal(){modalBg.classList.remove('show')}
-
-function openStudent(s={}){
- if(!db.classes.length) return alert('Veuillez d\'abord ajouter au moins une classe!');
- openModal('Élève',`<div class="formgrid">
- <div class="field"><label>ID Élève</label><input id="f_id" value="${esc(s.id||'ST-'+String(db.students.length+1).padStart(4,'0'))}"></div>
- <div class="field"><label>Nom Complet</label><input id="f_name" value="${esc(s.name||'')}"></div>
- <div class="field"><label>Classe</label><select id="f_class">${db.classes.map(c=>`<option ${c.code===s.class?'selected':''}>${esc(c.code)}</option>`).join('')}</select></div>
- <div class="field"><label>Parent</label><input id="f_parent" value="${esc(s.parent||'')}"></div>
- <div class="field"><label>Téléphone Parent</label><input id="f_phone" value="${esc(s.phone||'')}"></div>
- <div class="field"><label>Code PIN (Mot de passe)</label><input id="f_pin" type="password" value="${esc(s.pin||'1234')}"></div>
- <div class="field"><label>Statut</label><select id="f_status"><option>Active</option><option>Inactive</option></select></div>
- </div><div class="modal-actions"><button class="btn primary" onclick="saveStudent('${esc(s.id||'')}')">Enregistrer</button></div>`);
+function deleteSubject(i) {
+  if(confirm("Supprimer cette matière?")) {
+    db.subjects.splice(i, 1);
+    saveDB();
+    renderSubjects();
+    populateDropdowns();
+  }
 }
 
-function saveStudent(old){
- let x={id:f_id.value.trim(),name:f_name.value.trim(),class:f_class.value,parent:f_parent.value.trim(),phone:f_phone.value.trim(),pin:f_pin.value.trim()||'1234',status:f_status.value};
- if(!x.name)return alert('Nom requis.');
- if(old)db.students=db.students.map(a=>a.id===old?x:a);else db.students.push(x);
- closeModal();save();
+function renderAdminAnnouncements() {
+  adminAnnList.innerHTML = (db.announcements || []).map((a, i) => `
+    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)">
+      <div>
+        <strong>${esc(a.title)}</strong> <span class="badge">${esc(a.target)}</span>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">${esc(a.date)} · Par: ${esc(a.author || 'Admin')}</div>
+        <p style="margin:6px 0 0">${esc(a.body)}</p>
+      </div>
+      <div>
+        <button class="btn danger" style="padding:6px 10px;font-size:12px" onclick="deleteAdminAnn(${i})">Supprimer</button>
+      </div>
+    </div>
+  `).join('') || '<div class="empty">Aucune annonce globale.</div>';
 }
-function editStudent(id){openStudent(db.students.find(s=>s.id===id))}
 
-function openTeacher(t={}){openModal('Enseignant',`<div class="formgrid">
- <div class="field"><label>ID (Code Enseignant)</label><input id="t_id" value="${esc(t.id||'T-'+String(db.teachers.length+1).padStart(3,'0'))}"></div>
- <div class="field"><label>Nom Complet</label><input id="t_name" value="${esc(t.name||'')}"></div>
- <div class="field"><label>Matière</label><input id="t_subject" value="${esc(t.subject||'')}"></div>
- <div class="field"><label>Téléphone</label><input id="t_phone" value="${esc(t.phone||'')}"></div>
- <div class="field"><label>Code PIN</label><input id="t_pin" type="password" value="${esc(t.pin||'1234')}"></div>
- </div><div class="modal-actions"><button class="btn primary" onclick="saveTeacher('${esc(t.id||'')}')">Enregistrer</button></div>`)}
+function openAdminAnnModal() { adminAnnModalBg.classList.add('show'); }
+function closeAdminAnnModal() { adminAnnModalBg.classList.remove('show'); }
 
-function saveTeacher(old){
- let x={id:t_id.value.trim(),name:t_name.value.trim(),subject:t_subject.value.trim(),email:'',phone:t_phone.value.trim(),pin:t_pin.value.trim()||'1234'};
- if(!x.name)return alert('Nom requis.');
- if(old)db.teachers=db.teachers.map(a=>a.id===old?x:a);else db.teachers.push(x);
- closeModal();save();
+function saveAdminAnn() {
+  if(!db.announcements) db.announcements = [];
+  const title = adm_ann_title.value.trim();
+  const body = adm_ann_body.value.trim();
+
+  if(!title || !body) return alert("Remplissez tous les champs.");
+
+  db.announcements.push({
+    date: adm_ann_date.value,
+    target: adm_ann_target.value,
+    title: title,
+    body: body,
+    author: "Administration"
+  });
+
+  closeAdminAnnModal();
+  saveDB();
+  renderAdminAnnouncements();
 }
-function editTeacher(id){openTeacher(db.teachers.find(t=>t.id===id))}
 
-function openSubject(s={}){openModal('Matière',`<div class="formgrid">
- <div class="field"><label>Code (Ex: MATH)</label><input id="sub_code" value="${esc(s.code||'')}"></div>
- <div class="field"><label>Nom Matière</label><input id="sub_name" value="${esc(s.name||'')}"></div>
- <div class="field"><label>Langue</label><input id="sub_lang" value="${esc(s.language||'Français')}"></div>
- <div class="field"><label>Cycle</label><input id="sub_cycle" value="${esc(s.cycle||'Tous')}"></div>
- </div><div class="modal-actions"><button class="btn primary" onclick="saveSubject('${esc(s.code||'')}')">Enregistrer</button></div>`)}
-function saveSubject(old){
- let x={code:sub_code.value.trim(),name:sub_name.value.trim(),language:sub_lang.value.trim(),cycle:sub_cycle.value.trim()};
- if(!x.code)return alert('Code requis.');
- if(old)db.subjects=db.subjects.map(a=>a.code===old?x:a);else db.subjects.push(x);
- closeModal();save();
+function deleteAdminAnn(i) {
+  if(confirm("Supprimer cette annonce?")) {
+    db.announcements.splice(i, 1);
+    saveDB();
+    renderAdminAnnouncements();
+  }
 }
-function editSubject(id){openSubject(db.subjects.find(s=>s.code===id))}
 
-function del(type,id){if(confirm('Supprimer?')){db[type]=db[type].filter(x=>(x.id||x.code)!==id);save()}}
-function clearAllData(){if(confirm('Tout effacer?')){db=emptyDb;save();alert('Base réinitialisée.')}}
-function exportBackup(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));a.download='carmelia_db.json';a.click()}
-function importBackup(e){const r=new FileReader();r.onload=ev=>{db=JSON.parse(ev.target.result);save();alert('Import réussi.')};r.readAsText(e.target.files[0])}
+function changeAdminSecurity() {
+  const newEmail = secAdminEmail.value.trim();
+  const oldP = oldAdminPin.value.trim();
+  const newP = newAdminPin.value.trim();
 
-function renderAll(){renderDashboard();renderStudents();renderTeachers();renderClasses();renderSubjects();renderAgenda();renderAnnouncements();renderAttendance()}
+  if (!newEmail) return alert("L'Email ne peut pas être vide.");
+  if (!oldP || !newP) return alert("Remplissez les champs de mot de passe.");
+  if (oldP !== (db.adminPin || 'admin123')) return alert("Ancien mot de passe incorrect.");
+
+  db.adminEmail = newEmail;
+  db.adminPin = newP;
+  saveDB();
+  oldAdminPin.value = '';
+  newAdminPin.value = '';
+  alert("Email et mot de passe mis à jour!");
+}
 </script>
 </body>
 </html>

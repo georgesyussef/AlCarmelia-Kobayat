@@ -3,59 +3,46 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>École Al-Carmelia · Espace Enseignants</title>
+<title>École Al-Carmelia · Enseignants</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7b1238">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
 :root{--burg:#7b1238;--navy:#12365f;--gold:#d7ae45;--cream:#faf7ef;--ink:#172235;--muted:#718096;--line:#e6e9ef;--white:#fff;--danger:#b42318;--green:#16825d}
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f4f6f9;color:var(--ink)}
+body{margin:0;font-family:Inter,system-ui,-apple-system,sans-serif;background:#f4f6f9;color:var(--ink)}
 button,input,select,textarea{font:inherit}
 
 .login-modal{position:fixed;inset:0;background:rgba(18,54,95,0.95);display:flex;align-items:center;justify-content:center;z-index:999;padding:15px}
-.login-box{background:#fff;padding:35px 25px;border-radius:18px;width:min(400px,100%);text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.2)}
-.login-box h2{margin:0 0 8px;color:var(--navy);font-size:22px}
-.login-box p{margin:0 0 20px;color:var(--muted);font-size:13.5px}
-.login-box input{width:100%;padding:12px;border:1px solid #d8dde6;border-radius:10px;margin-bottom:12px;text-align:center;font-size:15px;outline:none}
+.login-box{background:#fff;padding:35px 25px;border-radius:18px;width:min(400px,100%);text-align:center}
+.login-box img{width:75px;height:75px;border-radius:12px;margin-bottom:12px;object-fit:cover}
+.login-box h2{margin:0 0 8px;color:var(--navy)}
+.login-box input{width:100%;padding:12px;border:1px solid #d8dde6;border-radius:10px;margin-bottom:12px;outline:none}
 
 .pw-wrap{position:relative;display:flex;align-items:center;margin-bottom:12px}
 .pw-wrap input{margin-bottom:0!important;padding-right:40px!important}
-.pw-toggle{position:absolute;right:12px;background:none;border:none;cursor:pointer;font-size:18px;padding:0;color:var(--muted)}
+.pw-toggle{position:absolute;right:12px;background:none;border:none;cursor:pointer;font-size:18px;color:var(--muted)}
 
-.btn{border:0;border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:650;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:14px}
+.container{max-width:1000px;margin:0 auto;padding:20px 15px}
+.header{background:#fff;border-radius:16px;padding:16px 20px;border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.header-brand{display:flex;align-items:center;gap:12px}
+.header-brand img{width:48px;height:48px;border-radius:10px;object-fit:cover}
+
+.btn{border:0;border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:650;display:inline-flex;align-items:center;gap:6px;font-size:14px}
 .btn-block{width:100%}
 .primary{background:var(--burg);color:#fff}
 .secondary{background:#eef2f7;color:var(--navy)}
 .danger{background:#fff0ef;color:var(--danger)}
 
-.container{max-width:950px;margin:0 auto;padding:20px 15px}
-.header{background:#fff;border-radius:16px;padding:20px;border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.header h1{margin:0;font-size:20px;color:var(--navy)}
-.header p{margin:4px 0 0;color:var(--muted);font-size:13px}
-
-.tabs{display:flex;gap:8px;margin-bottom:20px;overflow-x:auto;padding-bottom:5px}
-.tab-btn{background:#fff;border:1px solid var(--line);padding:10px 18px;border-radius:10px;cursor:pointer;white-space:nowrap;font-weight:600;color:var(--muted)}
+.tabs{display:flex;gap:8px;margin-bottom:20px;overflow-x:auto}
+.tab-btn{background:#fff;border:1px solid var(--line);padding:10px 18px;border-radius:10px;cursor:pointer;font-weight:600;color:var(--muted);white-space:nowrap}
 .tab-btn.active{background:var(--burg);color:#fff;border-color:var(--burg)}
 
 .card{background:#fff;border-radius:16px;border:1px solid var(--line);padding:20px;margin-bottom:15px}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px;align-items:center}
-.toolbar select,.toolbar input,.modal input,.modal select,.modal textarea{border:1px solid #d8dde6;border-radius:10px;padding:9px 12px;background:#fff;outline:none}
-
-.table-wrap{overflow-x:auto}
 .table{width:100%;border-collapse:collapse}
 .table th,.table td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left}
-.table th{font-size:12px;color:var(--muted);text-transform:uppercase}
-.table input[type="number"]{width:80px;padding:6px;border:1px solid #d8dde6;border-radius:6px;text-align:center}
-
-.badge{display:inline-block;padding:4px 9px;border-radius:999px;font-size:12px;font-weight:700;background:#eef3fa;color:var(--navy)}
-.badge.red{background:#fde8e8;color:var(--danger)}
-.empty{text-align:center;padding:30px;color:var(--muted)}
-
-.modal-bg{display:none;position:fixed;inset:0;background:#10182899;z-index:20;align-items:center;justify-content:center;padding:18px}
-.modal-bg.show{display:flex}
-.modal{width:min(500px,100%);background:#fff;border-radius:18px;padding:22px}
-.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}
-.field input,.field select,.field textarea{width:100%}
-.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+.table th{font-size:12px;color:var(--muted)}
+.table input{width:70px;padding:6px;border:1px solid #d8dde6;border-radius:6px;text-align:center}
 </style>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -64,11 +51,12 @@ button,input,select,textarea{font:inherit}
 
 <div id="loginModal" class="login-modal">
   <div class="login-box">
-    <h2>École Al-Carmelia</h2>
-    <p>Espace Enseignants / Professeurs</p>
-    <input type="text" id="teacherIdInput" placeholder="Code Enseignant (Ex: T-001)">
+    <img src="icon-192.png" alt="Logo">
+    <h2>Espace Enseignants</h2>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:20px">École Al-Carmelia</p>
+    <input type="text" id="teacherIdInput" placeholder="ID Enseignant (Ex: T-01)">
     <div class="pw-wrap">
-      <input type="password" id="teacherPinInput" placeholder="Code PIN (Mot de passe)">
+      <input type="password" id="teacherPinInput" placeholder="Code PIN">
       <button class="pw-toggle" type="button" onclick="togglePass('teacherPinInput', this)">👁️</button>
     </div>
     <button class="btn primary btn-block" onclick="loginTeacher()">Se Connecter</button>
@@ -77,164 +65,95 @@ button,input,select,textarea{font:inherit}
 
 <div id="teacherContent" class="container" style="display:none">
   <header class="header">
-    <div>
-      <h1 id="teacherNameDisplay">Enseignant</h1>
-      <p id="teacherSubjectDisplay">Matière : -</p>
+    <div class="header-brand">
+      <img src="icon-192.png" alt="Logo">
+      <div>
+        <h1 id="teacherNameDisplay" style="margin:0;font-size:18px;color:var(--navy)">Enseignant</h1>
+        <p id="teacherSubjDisplay" style="margin:2px 0 0;color:var(--muted);font-size:13px">Matière</p>
+      </div>
     </div>
     <button class="btn danger" style="padding:8px 14px;font-size:12px" onclick="logoutTeacher()">Déconnexion</button>
   </header>
 
   <nav class="tabs">
-    <button class="tab-btn active" onclick="switchTab('t_att', this)">✓ Présence</button>
+    <button class="tab-btn active" onclick="switchTab('t_agenda', this)">📖 Agenda / Devoirs</button>
     <button class="tab-btn" onclick="switchTab('t_grades', this)">📝 Saisie des Notes</button>
-    <button class="tab-btn" onclick="switchTab('t_agenda', this)">📅 Agenda & Devoirs</button>
-    <button class="tab-btn" onclick="switchTab('t_ann', this)">📢 Annonces & Remarques</button>
-    <button class="tab-btn" onclick="switchTab('t_security', this)">🔒 Mot de passe</button>
+    <button class="tab-btn" onclick="switchTab('t_attendance', this)">📋 Absences</button>
   </nav>
 
-  <main>
-    <div id="t_att" class="tab-content">
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
-          <h3 style="margin:0">Registre de Présence</h3>
-          <button class="btn primary" onclick="saveAttendance()">💾 Enregistrer Présence</button>
-        </div>
-        <div class="toolbar">
-          <select id="attClass" onchange="renderAttendance()"></select>
-          <input type="date" id="attDate" onchange="renderAttendance()">
-        </div>
-        <div class="table-wrap">
-          <table class="table">
-            <thead>
-              <tr><th>ID Élève</th><th>Nom Complet</th><th>Statut</th></tr>
-            </thead>
-            <tbody id="attendanceBody"></tbody>
-          </table>
-        </div>
+  <div id="t_agenda" class="tab-content">
+    <div class="card">
+      <h3>Ajouter un Devoir / Agenda</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <div><label style="font-size:12px;color:var(--muted)">Classe</label><select id="ag_class" style="width:100%;padding:10px;border-radius:8px;border:1px solid #d8dde6"></select></div>
+        <div><label style="font-size:12px;color:var(--muted)">Pour le (Date)</label><input type="date" id="ag_date" style="width:100%;padding:10px;border-radius:8px;border:1px solid #d8dde6"></div>
       </div>
+      <div style="margin-bottom:12px">
+        <label style="font-size:12px;color:var(--muted)">Titre du cours / Chapitre</label>
+        <input type="text" id="ag_title" style="width:100%;padding:10px;border-radius:8px;border:1px solid #d8dde6" placeholder="Ex: Ch 3 - Exercices Page 42">
+      </div>
+      <div style="margin-bottom:15px">
+        <label style="font-size:12px;color:var(--muted)">Détails du Devoir</label>
+        <textarea id="ag_body" rows="3" style="width:100%;padding:10px;border-radius:8px;border:1px solid #d8dde6" placeholder="Consignes particulières..."></textarea>
+      </div>
+      <button class="btn primary" onclick="saveAgenda()">Publier l'Agenda</button>
     </div>
 
-    <div id="t_grades" class="tab-content" style="display:none">
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
-          <h3 style="margin:0">Saisie et Gestion des Notes</h3>
-          <button class="btn primary" onclick="saveGrades()">💾 Sauvegarder les Notes</button>
-        </div>
-        <div class="toolbar">
-          <select id="gradeClass" onchange="renderGradesTable()"></select>
-          <select id="gradeSubject" onchange="renderGradesTable()"></select>
-        </div>
-        <div class="table-wrap">
-          <table class="table">
-            <thead>
-              <tr><th>ID Élève</th><th>Nom Élève</th><th>Note (/20)</th><th>Coefficient</th><th>Remarque</th></tr>
-            </thead>
-            <tbody id="gradesBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div id="t_agenda" class="tab-content" style="display:none">
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
-          <h3 style="margin:0">Devoirs et Examens</h3>
-          <button class="btn primary" onclick="openAgendaModal()">＋ Ajouter Devoir</button>
-        </div>
-        <div id="agendaList"></div>
-      </div>
-    </div>
-
-    <div id="t_ann" class="tab-content" style="display:none">
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
-          <h3 style="margin:0">Annonces & Remarques aux Parents</h3>
-          <button class="btn primary" onclick="openAnnModal()">＋ Publier une Remarque</button>
-        </div>
-        <div id="annList"></div>
-      </div>
-    </div>
-
-    <div id="t_security" class="tab-content" style="display:none">
-      <div class="card" style="max-width:400px;margin:0 auto">
-        <h3>Changer le mot de passe</h3>
-        <div style="margin-bottom:12px">
-          <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Ancien mot de passe</label>
-          <div class="pw-wrap">
-            <input type="password" id="oldTeacherPin" style="width:100%;padding:10px;border:1px solid #d8dde6;border-radius:10px">
-            <button class="pw-toggle" type="button" onclick="togglePass('oldTeacherPin', this)">👁️</button>
-          </div>
-        </div>
-        <div style="margin-bottom:15px">
-          <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:5px">Nouveau mot de passe</label>
-          <div class="pw-wrap">
-            <input type="password" id="newTeacherPin" style="width:100%;padding:10px;border:1px solid #d8dde6;border-radius:10px">
-            <button class="pw-toggle" type="button" onclick="togglePass('newTeacherPin', this)">👁️</button>
-          </div>
-        </div>
-        <button class="btn primary" onclick="changeTeacherPassword()">Changer le mot de passe</button>
-      </div>
-    </div>
-  </main>
-</div>
-
-<!-- Modal Agenda -->
-<div class="modal-bg" id="modalBg">
-  <div class="modal">
-    <h3 id="modalTitle">Ajouter Devoir / Examen</h3>
-    <div class="formgrid">
-      <div class="field"><label>Date</label><input type="date" id="a_date"></div>
-      <div class="field"><label>Classe</label><select id="a_class"></select></div>
-      <div class="field"><label>Matière</label><select id="a_subject"></select></div>
-      <div class="field"><label>Type</label><select id="a_type"><option>Homework</option><option>Exam</option></select></div>
-      <div class="field" style="grid-column:1/-1"><label>Titre</label><input id="a_title" placeholder="Ex: Devoir de Mathématiques"></div>
-      <div class="field" style="grid-column:1/-1"><label>Détails / Description</label><textarea id="a_details" rows="3" placeholder="Ex: Exercices 1, 2 et 3 page 45"></textarea></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn secondary" onclick="closeModal()">Annuler</button>
-      <button class="btn primary" onclick="saveAgenda()">Publier Devoir</button>
+    <div class="card">
+      <h3>Devoirs Récents Publiés</h3>
+      <div id="teacherAgendaList"></div>
     </div>
   </div>
-</div>
 
-<!-- Modal Announcement -->
-<div class="modal-bg" id="annModalBg">
-  <div class="modal">
-    <h3>Publier une Annonce / Remarque</h3>
-    <div class="formgrid">
-      <div class="field"><label>Date</label><input type="date" id="ann_date"></div>
-      <div class="field"><label>Type de Cible</label>
-        <select id="ann_target_type" onchange="updateAnnTargetOptions()">
-          <option value="Class">Classe Entière</option>
-          <option value="Student">Élève Spécifique</option>
-        </select>
+  <div id="t_grades" class="tab-content" style="display:none">
+    <div class="card">
+      <div style="display:flex;gap:10px;margin-bottom:15px;align-items:center">
+        <select id="gr_class" onchange="renderGradesTable()" style="padding:10px;border-radius:8px;border:1px solid #d8dde6"></select>
+        <button class="btn primary" onclick="saveGrades()">💾 Enregistrer les Notes</button>
       </div>
-      <div class="field" style="grid-column:1/-1"><label>Cible (Destinataire)</label><select id="ann_target_val"></select></div>
-      <div class="field" style="grid-column:1/-1"><label>Titre de la Remarque</label><input id="ann_title" placeholder="Ex: Remarque sur la discipline / Devoir non fait"></div>
-      <div class="field" style="grid-column:1/-1"><label>Message / Détails</label><textarea id="ann_body" rows="3" placeholder="Rédigez votre message ici..."></textarea></div>
+      <div style="overflow-x:auto">
+        <table class="table">
+          <thead><tr><th>Élève</th><th>Note / 20</th><th>Remarque</th></tr></thead>
+          <tbody id="gradesBody"></tbody>
+        </table>
+      </div>
     </div>
-    <div class="modal-actions">
-      <button class="btn secondary" onclick="closeAnnModal()">Annuler</button>
-      <button class="btn primary" onclick="saveAnnouncement()">Envoyer la Remarque</button>
+  </div>
+
+  <div id="t_attendance" class="tab-content" style="display:none">
+    <div class="card">
+      <div style="display:flex;gap:10px;margin-bottom:15px;align-items:center">
+        <select id="att_class" onchange="renderAttendanceTable()" style="padding:10px;border-radius:8px;border:1px solid #d8dde6"></select>
+        <input type="date" id="att_date" onchange="renderAttendanceTable()" style="padding:10px;border-radius:8px;border:1px solid #d8dde6">
+        <button class="btn primary" onclick="saveAttendance()">💾 Valider Absences</button>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="table">
+          <thead><tr><th>Élève</th><th>Statut</th></tr></thead>
+          <tbody id="attendanceBody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+
 const firebaseConfig = {
   apiKey: "AIzaSyDJRfis99yy8m9Z7pIHkw3U2i0jUqLXBec",
   authDomain: "carmelia-school.firebaseapp.com",
   projectId: "carmelia-school",
   storageBucket: "carmelia-school.firebasestorage.app",
   messagingSenderId: "710304409299",
-  appId: "1:710304409299:web:44c4c109d432a6e3ba1626",
-  measurementId: "G-E470YHZM0K"
+  appId: "1:710304409299:web:44c4c109d432a6e3ba1626"
 };
-
 firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 
-let db = {students:[], teachers:[], classes:[], subjects:[], agenda:[], announcements:[], attendance:{}, grades:{}};
+let db = { students:[], classes:[], agenda:[], grades:{}, attendance:{} };
 let currentTeacher = null;
 
 firestore.collection("school_data").doc("main").onSnapshot((doc) => {
@@ -244,62 +163,31 @@ firestore.collection("school_data").doc("main").onSnapshot((doc) => {
   }
 });
 
-function togglePass(inputId, btn) {
-  const inp = document.getElementById(inputId);
-  if (inp.type === "password") {
-    inp.type = "text";
-    btn.textContent = "🙈";
-  } else {
-    inp.type = "password";
-    btn.textContent = "👁️";
-  }
-}
-
-function saveDB() {
-  firestore.collection("school_data").doc("main").set(db)
-    .then(() => alert("Données enregistrées avec succès!"))
-    .catch(err => alert("Erreur de sauvegarde: " + err.message));
+function togglePass(id, btn){
+  const inp = document.getElementById(id);
+  inp.type = inp.type==='password'?'text':'password';
+  btn.textContent = inp.type==='password'?'👁️':'🙈';
 }
 
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 
 function loginTeacher() {
-  const id = document.getElementById('teacherIdInput').value.trim();
-  const pin = document.getElementById('teacherPinInput').value.trim();
-  
-  const found = db.teachers.find(t => t.id.toLowerCase() === id.toLowerCase() && (t.pin || '1234') === pin);
-  
-  if (found) {
-    currentTeacher = found;
-    sessionStorage.setItem('teacher_id', currentTeacher.id);
+  const tid = teacherIdInput.value.trim().toUpperCase();
+  const pin = teacherPinInput.value.trim();
+  const t = (db.teachers || []).find(x => x.id.toUpperCase() === tid && (x.pin || '1234') === pin);
+
+  if (t) {
+    currentTeacher = t;
+    sessionStorage.setItem('teacher_id', t.id);
     document.getElementById('loginModal').style.display = 'none';
     document.getElementById('teacherContent').style.display = 'block';
     renderTeacherData();
   } else {
-    alert("Identifiant ou Code PIN incorrect!");
+    alert("ID ou PIN incorrect.");
   }
 }
 
-function logoutTeacher() {
-  sessionStorage.removeItem('teacher_id');
-  location.reload();
-}
-
-const savedTeacherId = sessionStorage.getItem('teacher_id');
-if (savedTeacherId) {
-  firestore.collection("school_data").doc("main").get().then((doc) => {
-    if (doc.exists) {
-      db = doc.data();
-      const found = db.teachers.find(t => t.id === savedTeacherId);
-      if (found) {
-        currentTeacher = found;
-        document.getElementById('loginModal').style.display = 'none';
-        document.getElementById('teacherContent').style.display = 'block';
-        renderTeacherData();
-      }
-    }
-  });
-}
+function logoutTeacher() { sessionStorage.removeItem('teacher_id'); location.reload(); }
 
 function switchTab(tabId, btn) {
   document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
@@ -308,241 +196,123 @@ function switchTab(tabId, btn) {
   btn.classList.add('active');
 }
 
-function changeTeacherPassword() {
-  const oldP = document.getElementById('oldTeacherPin').value.trim();
-  const newP = document.getElementById('newTeacherPin').value.trim();
-
-  if (!oldP || !newP) return alert("Veuillez remplir tous les champs.");
-  if ((currentTeacher.pin || '1234') !== oldP) return alert("Ancien mot de passe incorrect.");
-
-  currentTeacher.pin = newP;
-  const idx = db.teachers.findIndex(t => t.id === currentTeacher.id);
-  if (idx !== -1) {
-    db.teachers[idx].pin = newP;
-    saveDB();
-    document.getElementById('oldTeacherPin').value = '';
-    document.getElementById('newTeacherPin').value = '';
-  }
-}
-
 function renderTeacherData() {
-  if (!currentTeacher) return;
+  teacherNameDisplay.textContent = currentTeacher.name;
+  teacherSubjDisplay.textContent = "Professeur de " + (currentTeacher.subject || "Général");
 
-  document.getElementById('teacherNameDisplay').textContent = currentTeacher.name;
-  document.getElementById('teacherSubjectDisplay').textContent = `Matière : ${currentTeacher.subject || 'Général'} · ID : ${currentTeacher.id}`;
+  const opts = (db.classes || []).map(c => `<option value="${esc(c.code)}">${esc(c.code)} - ${esc(c.name)}</option>`).join('');
+  ag_class.innerHTML = opts;
+  gr_class.innerHTML = opts;
+  att_class.innerHTML = opts;
+  
+  if(!ag_date.value) ag_date.value = new Date().toISOString().split('T')[0];
+  if(!att_date.value) att_date.value = new Date().toISOString().split('T')[0];
 
-  populateOptions();
-  renderAttendance();
+  renderTeacherAgenda();
   renderGradesTable();
-  renderAgendaList();
-  renderAnnouncements();
+  renderAttendanceTable();
 }
 
-function populateOptions() {
-  const classOpts = (db.classes || []).map(c => `<option value="${esc(c.code)}">${esc(c.code)} - ${esc(c.name)}</option>`).join('');
-  const subjOpts = (db.subjects || []).map(s => `<option value="${esc(s.name)}">${esc(s.name)}</option>`).join('');
-
-  attClass.innerHTML = classOpts || '<option>Aucune classe</option>';
-  gradeClass.innerHTML = classOpts || '<option>Aucune classe</option>';
-  gradeSubject.innerHTML = subjOpts || '<option>Aucune matière</option>';
-  a_class.innerHTML = classOpts;
-  a_subject.innerHTML = subjOpts;
-
-  if(!attDate.value) attDate.value = new Date().toISOString().split('T')[0];
-  if(!a_date.value) a_date.value = new Date().toISOString().split('T')[0];
-  if(!ann_date.value) ann_date.value = new Date().toISOString().split('T')[0];
-}
-
-function renderAttendance() {
-  if (!attClass.value) return;
-  const key = attDate.value + '|' + attClass.value;
-  const rec = (db.attendance && db.attendance[key]) ? db.attendance[key] : {};
-  const list = (db.students || []).filter(s => s.class === attClass.value);
-
-  attendanceBody.innerHTML = list.map(s => `
-    <tr>
-      <td>${esc(s.id)}</td>
-      <td><strong>${esc(s.name)}</strong></td>
-      <td>
-        <label style="margin-right:15px"><input type="radio" name="att_${s.id}" value="Present" ${(rec[s.id]||'Present')==='Present'?'checked':''}> Présent</label>
-        <label><input type="radio" name="att_${s.id}" value="Absent" ${rec[s.id]==='Absent'?'checked':''}> Absent</label>
-      </td>
-    </tr>
-  `).join('') || '<tr><td colspan="3" class="empty">Aucun élève dans cette classe.</td></tr>';
-}
-
-function saveAttendance() {
-  if (!db.attendance) db.attendance = {};
-  const key = attDate.value + '|' + attClass.value;
-  const rec = {};
-  document.querySelectorAll('input[name^="att_"]:checked').forEach(r => {
-    rec[r.name.replace('att_', '')] = r.value;
+function saveAgenda() {
+  if(!db.agenda) db.agenda = [];
+  const item = {
+    id: Date.now().toString(),
+    class: ag_class.value,
+    date: ag_date.value,
+    subject: currentTeacher.subject || 'Général',
+    title: ag_title.value.trim(),
+    body: ag_body.value.trim(),
+    teacher: currentTeacher.name
+  };
+  if(!item.title) return alert("Entrez un titre.");
+  db.agenda.push(item);
+  firestore.collection("school_data").doc("main").set(db).then(() => {
+    alert("Agenda publié!");
+    ag_title.value = ""; ag_body.value = "";
+    renderTeacherAgenda();
   });
-  db.attendance[key] = rec;
-  saveDB();
+}
+
+function renderTeacherAgenda() {
+  const list = (db.agenda || []).filter(a => a.teacher === currentTeacher.name);
+  teacherAgendaList.innerHTML = list.map(a => `
+    <div style="border-bottom:1px solid var(--line);padding:10px 0">
+      <strong>[${esc(a.class)}] ${esc(a.title)}</strong> <small style="color:var(--muted)">pour le ${esc(a.date)}</small>
+      <p style="margin:4px 0 0;font-size:13px">${esc(a.body)}</p>
+    </div>
+  `).join('') || '<div style="color:var(--muted);padding:10px">Aucun devoir publié.</div>';
 }
 
 function renderGradesTable() {
-  if (!gradeClass.value || !gradeSubject.value) return;
-  const selectedClass = gradeClass.value;
-  const selectedSubj = gradeSubject.value;
-  const studentsInClass = (db.students || []).filter(s => s.class === selectedClass);
-
+  const cls = gr_class.value;
+  const stList = (db.students || []).filter(s => s.class === cls);
   if(!db.grades) db.grades = {};
 
-  gradesBody.innerHTML = studentsInClass.map(s => {
-    const sGrades = db.grades[s.id] || [];
-    const existing = sGrades.find(g => g.subject === selectedSubj) || {};
+  gradesBody.innerHTML = stList.map(s => {
+    const key = `${s.id}_${currentTeacher.subject || 'Gen'}`;
+    const g = db.grades[key] || { note: '', rem: '' };
     return `
       <tr>
-        <td>${esc(s.id)}</td>
-        <td><strong>${esc(s.name)}</strong></td>
-        <td><input type="number" step="0.5" min="0" max="20" id="grade_${s.id}" value="${existing.score ?? ''}" placeholder="/20"></td>
-        <td><input type="number" step="1" min="1" max="10" id="coef_${s.id}" value="${existing.coef ?? 1}" style="width:60px"></td>
-        <td><input type="text" id="rem_${s.id}" value="${esc(existing.remark || '')}" placeholder="Remarque..." style="width:100%"></td>
+        <td><strong>${esc(s.name)}</strong> <small>(${esc(s.id)})</small></td>
+        <td><input type="text" id="g_note_${esc(s.id)}" value="${esc(g.note)}"></td>
+        <td><input type="text" id="g_rem_${esc(s.id)}" style="width:180px" value="${esc(g.rem)}" placeholder="Remarque..."></td>
       </tr>
     `;
-  }).join('') || '<tr><td colspan="5" class="empty">Aucun élève dans cette classe.</td></tr>';
+  }).join('') || '<tr><td colspan="3" style="text-align:center;color:var(--muted)">Aucun élève dans cette classe.</td></tr>';
 }
 
 function saveGrades() {
-  if (!db.grades) db.grades = {};
-  const selectedClass = gradeClass.value;
-  const selectedSubj = gradeSubject.value;
-  const studentsInClass = (db.students || []).filter(s => s.class === selectedClass);
+  const cls = gr_class.value;
+  const stList = (db.students || []).filter(s => s.class === cls);
+  if(!db.grades) db.grades = {};
 
-  studentsInClass.forEach(s => {
-    const scoreVal = document.getElementById(`grade_${s.id}`).value;
-    const coefVal = document.getElementById(`coef_${s.id}`).value;
-    const remVal = document.getElementById(`rem_${s.id}`).value;
-
-    if (!db.grades[s.id]) db.grades[s.id] = [];
-
-    db.grades[s.id] = db.grades[s.id].filter(g => g.subject !== selectedSubj);
-
-    if (scoreVal !== '') {
-      db.grades[s.id].push({
-        subject: selectedSubj,
-        score: parseFloat(scoreVal),
-        coef: parseFloat(coefVal) || 1,
-        remark: remVal
-      });
-    }
+  stList.forEach(s => {
+    const note = document.getElementById(`g_note_${s.id}`)?.value.trim() || '';
+    const rem = document.getElementById(`g_rem_${s.id}`)?.value.trim() || '';
+    const key = `${s.id}_${currentTeacher.subject || 'Gen'}`;
+    db.grades[key] = { note, rem, subject: currentTeacher.subject || 'Général' };
   });
 
-  saveDB();
+  firestore.collection("school_data").doc("main").set(db).then(() => alert("Notes enregistrées!"));
 }
 
-function renderAgendaList() {
-  agendaList.innerHTML = (db.agenda || []).map((a, i) => `
-    <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)">
-      <div>
-        <strong>${esc(a.title)}</strong> <span class="badge">${esc(a.type)}</span>
-        <div style="font-size:12px;color:var(--muted);margin-top:4px">${esc(a.date)} · Classe: ${esc(a.class)} · Matière: ${esc(a.subject)}</div>
-        <div style="margin-top:4px">${esc(a.details || '')}</div>
-      </div>
-      <div>
-        <button class="btn danger" style="padding:6px 10px;font-size:12px" onclick="deleteAgenda(${i})">Supprimer</button>
-      </div>
-    </div>
-  `).join('') || '<div class="empty">Aucun devoir publié.</div>';
-}
+function renderAttendanceTable() {
+  const cls = att_class.value;
+  const dt = att_date.value;
+  const stList = (db.students || []).filter(s => s.class === cls);
+  if(!db.attendance) db.attendance = {};
 
-function openAgendaModal() { modalBg.classList.add('show'); }
-function closeModal() { modalBg.classList.remove('show'); }
-
-function saveAgenda() {
-  if (!db.agenda) db.agenda = [];
-  db.agenda.push({
-    date: a_date.value,
-    class: a_class.value,
-    subject: a_subject.value,
-    type: a_type.value,
-    title: a_title.value,
-    details: a_details.value
-  });
-  closeModal();
-  saveDB();
-  renderAgendaList();
-}
-
-function deleteAgenda(index) {
-  if(confirm("Voulez-vous supprimer ce devoir?")) {
-    db.agenda.splice(index, 1);
-    saveDB();
-    renderAgendaList();
-  }
-}
-
-// Announcements Logic
-function openAnnModal() {
-  annModalBg.classList.add('show');
-  updateAnnTargetOptions();
-}
-function closeAnnModal() { annModalBg.classList.remove('show'); }
-
-function updateAnnTargetOptions() {
-  const type = document.getElementById('ann_target_type').value;
-  const targetSelect = document.getElementById('ann_target_val');
-  
-  if (type === 'Class') {
-    targetSelect.innerHTML = (db.classes || []).map(c => `<option value="${esc(c.code)}">Classe: ${esc(c.code)} - ${esc(c.name)}</option>`).join('');
-  } else {
-    targetSelect.innerHTML = (db.students || []).map(s => `<option value="${esc(s.id)}">Élève: ${esc(s.name)} (${esc(s.class)} - ID: ${esc(s.id)})</option>`).join('');
-  }
-}
-
-function saveAnnouncement() {
-  if(!db.announcements) db.announcements = [];
-  const targetVal = document.getElementById('ann_target_val').value;
-  const title = document.getElementById('ann_title').value.trim();
-  const body = document.getElementById('ann_body').value.trim();
-
-  if(!title || !body) return alert("Veuillez remplir le titre et le message.");
-
-  db.announcements.push({
-    date: ann_date.value,
-    target: targetVal,
-    title: title,
-    body: body,
-    author: currentTeacher ? currentTeacher.name : 'Enseignant'
-  });
-
-  closeAnnModal();
-  saveDB();
-  renderAnnouncements();
-}
-
-function renderAnnouncements() {
-  annList.innerHTML = (db.announcements || []).map((a, i) => {
-    let targetLabel = a.target;
-    if(a.target === 'All') targetLabel = 'Toute l\'école';
-    else {
-      const st = (db.students || []).find(s => s.id === a.target);
-      if(st) targetLabel = `Élève: ${st.name} (${st.class})`;
-    }
-
+  attendanceBody.innerHTML = stList.map(s => {
+    const key = `${dt}_${s.id}`;
+    const st = db.attendance[key] || 'Présent';
     return `
-      <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)">
-        <div>
-          <strong>${esc(a.title)}</strong> <span class="badge ${a.target.startsWith('ST-') ? 'red' : ''}">${esc(targetLabel)}</span>
-          <div style="font-size:12px;color:var(--muted);margin-top:4px">${esc(a.date)} ${a.author ? '· Par: ' + esc(a.author) : ''}</div>
-          <p style="margin:6px 0 0">${esc(a.body)}</p>
-        </div>
-        <div>
-          <button class="btn danger" style="padding:6px 10px;font-size:12px" onclick="deleteAnn(${i})">Supprimer</button>
-        </div>
-      </div>
+      <tr>
+        <td><strong>${esc(s.name)}</strong></td>
+        <td>
+          <select id="att_val_${esc(s.id)}" style="padding:6px;border-radius:6px;border:1px solid #d8dde6">
+            <option value="Présent" ${st==='Présent'?'selected':''}>✅ Présent</option>
+            <option value="Absent" ${st==='Absent'?'selected':''}>❌ Absent</option>
+            <option value="Retard" ${st==='Retard'?'selected':''}>⚠️ Retard</option>
+          </select>
+        </td>
+      </tr>
     `;
-  }).join('') || '<div class="empty">Aucune annonce ou remarque publiée.</div>';
+  }).join('') || '<tr><td colspan="2" style="text-align:center;color:var(--muted)">Aucun élève.</td></tr>';
 }
 
-function deleteAnn(idx) {
-  if(confirm("Voulez-vous supprimer cette remarque?")) {
-    db.announcements.splice(idx, 1);
-    saveDB();
-    renderAnnouncements();
-  }
+function saveAttendance() {
+  const cls = att_class.value;
+  const dt = att_date.value;
+  const stList = (db.students || []).filter(s => s.class === cls);
+  if(!db.attendance) db.attendance = {};
+
+  stList.forEach(s => {
+    const val = document.getElementById(`att_val_${s.id}`)?.value || 'Présent';
+    const key = `${dt}_${s.id}`;
+    db.attendance[key] = val;
+  });
+
+  firestore.collection("school_data").doc("main").set(db).then(() => alert("Absences enregistrées!"));
 }
 </script>
 </body>
